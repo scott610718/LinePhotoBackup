@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINE群組相簿備份工具</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="mb-0">LINE群組相簿備份工具</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" id="configTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="line-tab" data-bs-toggle="tab" data-bs-target="#line-config" type="button">LINE設定</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="google-tab" data-bs-toggle="tab" data-bs-target="#google-config" type="button">Google雲端設定</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="backup-tab" data-bs-toggle="tab" data-bs-target="#backup-operation" type="button">執行備份</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content p-3" id="configTabContent">
+                            <!-- LINE設定 -->
+                            <div class="tab-pane fade show active" id="line-config" role="tabpanel">
+                                <h4>LINE官方帳號設定</h4>
+                                <form id="lineConfigForm">
+                                    <div class="mb-3">
+                                        <label for="lineChannelId" class="form-label">Channel ID</label>
+                                        <input type="text" class="form-control" id="lineChannelId" required>
+                                        <div class="form-text">您可以在LINE Developer Console找到此ID</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="lineChannelSecret" class="form-label">Channel Secret</label>
+                                        <input type="password" class="form-control" id="lineChannelSecret" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="lineAccessToken" class="form-label">Channel Access Token</label>
+                                        <input type="password" class="form-control" id="lineAccessToken" required>
+                                    </div>
+                                    <button type="button" class="btn btn-primary" id="saveLineConfig">儲存LINE設定</button>
+                                </form>
+                            </div>
+
+                            <!-- Google設定 -->
+                            <div class="tab-pane fade" id="google-config" role="tabpanel">
+                                <h4>Google雲端硬碟設定</h4>
+                                <form id="googleConfigForm">
+                                    <div class="mb-3">
+                                        <label for="googleClientId" class="form-label">Client ID</label>
+                                        <input type="text" class="form-control" id="googleClientId" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="googleApiKey" class="form-label">API Key</label>
+                                        <input type="password" class="form-control" id="googleApiKey" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="googleScope" class="form-label">API範圍</label>
+                                        <input type="text" class="form-control" id="googleScope" value="https://www.googleapis.com/auth/drive" readonly>
+                                    </div>
+                                    <button type="button" class="btn btn-primary" id="authorizeGoogle">授權Google帳號</button>
+                                    <div id="googleAuthStatus" class="mt-3 d-none alert alert-success">
+                                        已成功連接到Google帳號
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- 備份操作 -->
+                            <div class="tab-pane fade" id="backup-operation" role="tabpanel">
+                                <h4>執行備份操作</h4>
+                                <form id="backupForm">
+                                    <div class="mb-3">
+                                        <label for="groupSelect" class="form-label">選擇群組</label>
+                                        <select class="form-select" id="groupSelect" required>
+                                            <option value="">-- 請先載入群組 --</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="folderName" class="form-label">雲端硬碟目錄名稱</label>
+                                        <input type="text" class="form-control" id="folderName" placeholder="例如: LINE群組相簿備份_20250312">
+                                    </div>
+                                    <button type="button" class="btn btn-secondary" id="loadGroups">載入群組列表</button>
+                                    <button type="button" class="btn btn-success" id="startBackup" disabled>開始備份</button>
+                                </form>
+                                
+                                <div class="mt-4">
+                                    <div class="progress d-none" id="backupProgress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                    <div id="backupStatus" class="mt-3"></div>
+                                    <div id="backupLog" class="mt-3 small bg-light p-3 d-none" style="max-height: 200px; overflow-y: auto;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="text-muted small">
+                            注意: 所有設定資料僅存儲在您的瀏覽器本地，不會傳送至任何第三方伺服器。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
