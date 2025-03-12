@@ -1,0 +1,2 @@
+# LinePhotoBackup
+設計一個能夠與LINE官方帳號連結並自動備份群組相簿的網站。
