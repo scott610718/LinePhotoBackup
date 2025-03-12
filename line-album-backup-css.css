@@ -1,0 +1,48 @@
+/* styles.css */
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: #06c755 !important; /* LINE綠色 */
+}
+
+.nav-tabs .nav-link.active {
+    font-weight: bold;
+    color: #06c755;
+    border-bottom: 2px solid #06c755;
+}
+
+.btn-primary {
+    background-color: #06c755;
+    border-color: #06c755;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #059b41;
+    border-color: #059b41;
+}
+
+#backupLog {
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    font-family: monospace;
+}
+
+.config-status {
+    font-size: 0.8rem;
+    margin-left: 10px;
+}
+
+.status-ok {
+    color: #28a745;
+}
+
+.status-error {
+    color: #dc3545;
+}
